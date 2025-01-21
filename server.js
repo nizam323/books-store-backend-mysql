@@ -11,21 +11,32 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
+// const db = mysql.createConnection({
+//   host: process.env.host,
+//   user: process.env.user,
+//   password: process.env.password,
+//   database: process.env.database,
+//   port:process.env.databasePort
+// });
+
+const db = mysql.createPool({
   host: process.env.host,
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,
-  port:process.env.databasePort
+  port: process.env.databasePort,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
-  if (err) {
-    console.error('Error connecting to the database:', err);
-    return;
-  }
-  console.log('Connected to the database.');
-});
+// db.connect((err) => {
+//   if (err) {
+//     console.error('Error connecting to the database:', err);
+//     return;
+//   }
+//   console.log('Connected to the database.');
+// });
 
 // SignUp Route
 app.post('/signup', async (req, res) => {
