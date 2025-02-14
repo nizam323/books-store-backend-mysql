@@ -139,7 +139,7 @@ app.get("/get-product/:id", (req, res) => {
 // Admin panel
 
 //get products
-app.put("/get", (req, res) => {
+app.put("/get-admins-products", (req, res) => {
   const { userEmail } = req.body;
   const sql = "select * from products where ownerEmail = ?";
   db.query(sql, [userEmail], (error, results) => {
